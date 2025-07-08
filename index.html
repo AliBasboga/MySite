@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Developer Portfolio</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1a202c;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(59,130,246,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #1a202c;
+            font-weight: 700;
+            animation: typeWriter 3s steps(40) 1s both;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #64748b;
+            animation: fadeIn 2s ease-out 2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: rgba(248, 250, 252, 0.5);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            color: #1a202c;
+            font-weight: 700;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #64748b;
+        }
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-card h3 {
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-card p {
+            color: #64748b;
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            width: 100%; /* veya ihtiyaca göre belirli bir genişlik */
+            height: auto; /* yüksekliği otomatik ayarlanır */
+            aspect-ratio: 16 / 9; /* istersen, resmin en-boy oranını belirleyebilirsin */
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            position: relative; /* pseudo-element için */
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* resmi alanı dolduracak şekilde kırpar veya sığdırır */
+            display: block; /* boşlukları kaldırır */
+        }           
+
+        .project-image::before {
+            content: '📱'; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+            z-index: 2; /* üstte tutar */   
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+        }
+
+        .project-description {
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: #ff6b6b;
+            transform: translateX(5px);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #1a202c;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #1a202c;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+            /* Sosyal linkler konteyneri */
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 25px; /* ikonlar arasındaki boşluk */
+        flex-wrap: wrap; /* ekran küçüldükçe satıra düşer */
+        margin-top: 20px;
+    }
+
+    /* İkonlara ve linklere genel stil */
+    .social-icon {
+        color: #333; /* ikonların rengi */
+        font-size: 2rem; /* ikonların boyutu */
+        transition: color 0.3s, transform 0.3s; /* hover efektleri */
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    /* Hover efektleri */
+    .social-icon:hover {
+        color: #007bff; /* hover rengi */
+        transform: scale(1.2); /* büyüme efekti */
+    }
+
+    /* E-posta linki özel stil (ikon ve metin) */
+    .email-link {
+        align-items: center; /* ikon ve metni hizala */
+    }
+
+    /* E-posta metni */
+    .email-text {
+        margin-left: 8px; /* ikon ile metin arasına boşluk */
+        font-size: 1rem;
+        color: #333;
+    }
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+    .social-icon {
+        font-size: 1.75rem; /* ekran küçüldükçe ikon boyutu azalır */
+    }
+    .email-text {
+        font-size: 0.9rem;
+    }
+}
+
+        /* Footer */
+        footer {
+            background: rgba(248, 250, 252, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        footer p {
+            color: #64748b;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: #64748b;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .social-links a:hover {
+            color: #3b82f6;
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+            to { text-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            40% { transform: translate(-50%, -50%) translateY(-10px); }
+            60% { transform: translate(-50%, -50%) translateY(-5px); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100vh); }
+        }
+
+        @keyframes typeWriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Ali Başboğa</div>
+            <ul class="nav-links">
+                <li><a href="#home">Ana Sayfa</a></li>
+                <li><a href="#about">Hakkımda</a></li>
+                <li><a href="#projects">Projeler</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Ali Başboğa</h1>
+            <p>Android Developer - Kotlin ile modern mobil uygulamalar geliştiriyorum</p>
+            <a href="#projects" class="cta-button">Projelerimi Gör</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="fade-in">Hakkımda</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>Merhaba! Ben tutkulu bir Android geliştiricisiyim ve Kotlin dilinde iy hale gelmiş durumdayım. Modern mobil uygulamalar geliştirmek, kullanıcı deneyimini iyileştirmek ve yenilikçi çözümler üretmek benim en büyük tutkum.</p>
+                    <p>Clean Architecture, MVVM pattern, Jetpack Compose ve diğer modern Android teknolojilerini kullanarak scalable ve maintainable uygulamalar geliştiriyorum.</p>
+                </div>
+                <div class="skills fade-in">
+                    <div class="skill-card">
+                        <div class="skill-icon">📱</div>
+                        <h3>Kotlin</h3>
+                        <p>Ana programlama dilim</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🎨</div>
+                        <h3>Jetpack Compose</h3>
+                        <p>Modern UI geliştirme</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🏗️</div>
+                        <h3>MVVM</h3>
+                        <p>Mimari pattern</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">🔄</div>
+                        <h3>Retrofit</h3>
+                        <p>API entegrasyonu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="fade-in">Projelerim</h2>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <img src="./img/1.png" alt="E-Ticaret Uygulaması">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Mobil yapay zeka uygulaması</h3>
+                        <p class="project-description">Yapay zeka, MVVM mimarisi ile geliştirilmiş kapsamlı mobil uygulama.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Kotlin</span>
+                            <span class="tech-tag">Gemini Alt Yapısı</span>
+                            <span class="tech-tag">MVVM</span>
+                            <span class="tech-tag">Room DB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/AliBasboga/KotlinArtificial-ntelligence?tab=readme-ov-file" class="project-link">GitHub →</a>
+                            <a href="#" class="project-link">Play Store →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <img src="./img/ewb.png">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Bayark tahmin etme sitesi</h3>
+                        <p class="project-description">Bayrak Tahmin Oyunu Hafızanızı test edin, dünya bayraklarını öğrenin ve eğlenin; hepsi tek bir yerde!</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">Css</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Her ciahaza uygun UI, UX tasarımı</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/AliBasboga/BBoga.github.io" class="project-link">GitHub →</a>
+                            <a href="https://alibasboga.github.io/BBoga.github.io/" class="project-link">Demo →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Detaylı Hesap Makinesi Uygulamsı</h3>
+                        <p class="project-description">İşte, detaylı hesap makinesi uygulaması. Hesaplamaları kolayca yapabilirsiniz!</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Kotlin</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">MVVM</span>
+                            <span class="tech-tag">View Binding</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/AliBasboga/detailedCalculatorKotlin" class="project-link">GitHub →</a>
+                            <a href="#" class="project-link">APK →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="fade-in">İletişim</h2>
+            <div class="contact-content">
+                <p class="fade-in" style="font-size: 1.2rem; margin-bottom: 2rem;">Bir projeniz mi var? Konuşalım!</p>
+                <form class="contact-form fade-in">
+                    <div class="form-group">
+                        <label for="name">Ad Soyad</label>
+                        <input type="text" id="name" name="name" placeholder="Adınız ve soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-posta</label>
+                        <input type="email" id="email" name="email" placeholder="ornek@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mesaj</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Mesaj Gönder</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sosyal Linkler -->
+            <div class="social-links">
+                <!-- GitHub -->
+                <a href="https://github.com/alibasboga" target="_blank" aria-label="GitHub" class="social-icon">
+                    <i class="fab fa-github"></i>
+                </a>
+                <!-- Linked -->
+                <a href="https://github.com/alibasboga" target="_blank" aria-label="LinkedIn" class="social-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <!-- Instagram -->
+                <a href="https://instagram.com/ali_basbg45" target="_blank" aria-label="Instagram" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <!-- E-posta -->
+                <a href="mailto:alibasoga885@mail.com" aria-label="E-posta" class="social-icon email-link">
+                    <i class="fas fa-envelope"></i>
+                    <span class="email-text">alibasboga885@mail.com</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+    <div class="container">
+        <div class="social-links">
+            <a href="mailto:alibasboga885@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://linkedin.com/in/alibaşboğa" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/alibasboga" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+            <a href="https://twitter.com/alibasboga" title="Twitter" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        </div>
+        <p>© 2025 Ali Başboğa - Android Developer. Tüm hakları saklıdır.</p>
+    </div>
+</footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(248, 250, 252, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(248, 250, 252, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Mesajınız gönderilmedi İsterseniz En alt kısımdan hesaplarımdan bana ulaşabilirsiniz.');
+            e.target.reset();
+        });
+
+        // Skill cards hover effect
+        document.querySelectorAll('.skill-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
